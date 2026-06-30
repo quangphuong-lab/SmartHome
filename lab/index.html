@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <img src="logo.jpg" alt="UTE Logo" class="tb-logo">
+    <div class="tb-title">SMART HOME</div>
+    <div class="tb-right">
+      <div class="gear-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <div class="body-wrap">
+
+    <div class="left-col">
+      <div class="sec-head">Điều khiển</div>
+      
+      <div class="device-card">
+        <div class="dc-label">Khóa cửa</div>
+        <div class="dc-btns" style="margin-top: 8px;">
+          <button class="btn-on" id="btn-open" onclick="setLock(true)">Mở</button>
+          <button class="btn-off" id="btn-close" onclick="setLock(false)">Khóa</button>
+        </div>
+      </div>
+
+      <div class="device-card">
+        <div class="dc-label">Điều hòa</div>
+        <label class="tog" style="margin: 8px 0;">
+          <input type="checkbox" id="ac-switch" onchange="toggleAC(this)">
+          <div class="tog-track"></div>
+          <div class="tog-thumb"></div>
+        </label>
+        <div class="tog-label">ON / OFF</div>
+      </div>
+
+      <div class="device-card">
+        <div class="dc-label">Độ sáng đèn</div>
+        <div class="dc-slider-wrap" style="margin: 12px 0 8px;">
+          <input type="range" id="light-slider" min="0" max="100" value="75" oninput="updateSlider(this)">
+        </div>
+        <div class="dc-slider-val" id="slider-val">75%</div>
+      </div>
+
+    </div>
+
+    <div class="mid-col">
+
+      <div class="sec-head">Trạng thái Thiết bị</div>
+      <div class="device-grid">
+        <div class="device-card" style="justify-content: center;">
+          <div class="dc-label">Bóng đèn</div>
+          <div class="bulb-ring" id="icon-bongden">
+            <div class="bulb-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffa726" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-card" style="justify-content: center;">
+          <div class="dc-label">Điều hòa</div>
+          <div class="dc-icon-box" id="icon-dieuhoa" style="margin-top: 5px;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5ec2d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="9" rx="2"/><path d="M6 19l1-3M12 19l1-3M18 19l1-3"/></svg>
+          </div>
+        </div>
+
+        <div class="device-card" style="justify-content: center;">
+          <div class="dc-label">Khóa cửa</div>
+          <div class="dc-icon-box" id="icon-cua" style="margin-top: 5px;">
+            <svg width="28" height="30" viewBox="0 0 24 24" fill="none" stroke="#7c6af7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-head">Cảm biến</div>
+      <div class="sensor-grid">
+        <div class="sensor-card">
+          <div class="sensor-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e05260" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+          </div>
+          <div class="sensor-name">Nhiệt độ</div>
+          <div class="sensor-val" id="nhietdo">--°C</div>
+        </div>
+
+        <div class="sensor-card">
+          <div class="sensor-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5ec2d8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <div class="sensor-name">Độ ẩm</div>
+          <div class="sensor-val" id="doam">--%</div>
+        </div>
+
+        <div class="sensor-card">
+          <div class="sensor-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4cd97b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="sensor-name">Điện năng</div>
+          <div class="sensor-val" id="diennang">-- kWh</div>
+        </div>
+      </div>
+
+      <div class="sec-head">Thời gian</div>
+      <div class="clock-card">
+        <div class="tb-date" id="tb-date">--</div>
+        <div class="tb-time" id="tb-time">00:00:00 --</div>
+      </div>
+
+    </div>
+
+    <div class="right-col">
+      <div class="sec-head">Biểu đồ Độ ẩm</div>
+      <div class="elec-card">
+        <div class="elec-head">
+          <span class="elec-title">Độ ẩm trung bình</span>
+          <select class="elec-tag" id="chart-range-humid" onchange="updateCharts()">
+            <option value="1">1 ngày</option>
+            <option value="2">2 ngày</option>
+            <option value="3">3 ngày</option>
+            <option value="4">4 ngày</option>
+            <option value="5">5 ngày</option>
+            <option value="6">6 ngày</option>
+            <option value="7" selected>7 ngày</option>
+          </select>
+        </div>
+        <div class="bar-chart" id="bar-chart-humid"></div>
+      </div>
+
+      <div class="sec-head">Biểu đồ Điện năng</div>
+      <div class="elec-card">
+        <div class="elec-head">
+          <span class="elec-title">Tiêu thụ điện năng</span>
+          <select class="elec-tag" id="chart-range-elec" onchange="updateCharts()">
+            <option value="1">1 ngày</option>
+            <option value="2">2 ngày</option>
+            <option value="3">3 ngày</option>
+            <option value="4">4 ngày</option>
+            <option value="5">5 ngày</option>
+            <option value="6">6 ngày</option>
+            <option value="7" selected>7 ngày</option>
+          </select>
+        </div>
+        <div class="bar-chart" id="bar-chart-elec"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer-bar">Nguyễn Quang Phương - 23161168</footer>
+  <footer class="footer-bar">Trần Bá Tiến Phát - 23161164</footer>
+  <footer class="footer-bar">Nguyễn Trí Long - 22161018</footer>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDC0t_Z8EZ5TUA-Vt6NWc659bxSK-irzmA",
+    authDomain: "smart-home-35576.firebaseapp.com",
+    databaseURL: "https://smart-home-35576-default-rtdb.firebaseio.com",
+    projectId: "smart-home-35576",
+    storageBucket: "smart-home-35576.firebasestorage.app",
+    messagingSenderId: "705109147404",
+    appId: "1:705109147404:web:cdab1a84ce815e10255329",
+    measurementId: "G-PK6JE0WR2T"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script src="function.js"></script>
+
+</body>
+</html>
